@@ -1,0 +1,44 @@
+{
+    "name": "stefanotorresi/thorr-persistence-doctrine",
+    "description": "Thorr\\Persistence data mapper adapters for Doctrine",
+    "type" : "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Stefano Torresi",
+            "email": "stefano@torresi.pro"
+        }
+    ],
+    "require": {
+        "php": "~5.5",
+        "stefanotorresi/thorr-persistence": "0.*@dev",
+        "doctrine/common": "~2.4"
+    },
+    "require-dev": {
+        "zendframework/zend-modulemanager": "~2.3",
+        "zendframework/zend-servicemanager": "~2.3",
+        "doctrine/orm": "~2.4",
+        "doctrine/mongodb-odm": "~1.0@beta",
+        "jackalope/jackalope-doctrine-dbal": "~1.1",
+        "doctrine/phpcr-odm": "~1.2"
+    },
+    "suggest": {
+        "zendframework/zend-modulemanager": "required to load the library as a ZF2 module",
+        "zendframework/zend-servicemanager": "required for DataMapperManager integration",
+        "doctrine/doctrine-orm-module" : "required to load AbstractEntity doctrine mapping"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.x-dev"
+        }
+    },
+    "autoload" : {
+        "classmap": [
+            "Module.php"
+        ],
+        "psr-4": {
+            "Thorr\\Persistence\\Doctrine\\": "src/",
+            "Thorr\\Persistence\\Doctrine\\Test\\": "tests/"
+        }
+    }
+}

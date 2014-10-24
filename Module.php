@@ -1,0 +1,71 @@
+<?php
+/**
+ * @author Stefano Torresi (http://stefanotorresi.it)
+ * @license See the file LICENSE.txt for copying permission.
+ * ************************************************
+ *
+ * This file is placed here for compatibility with Zendframework 2's ModuleManager.
+ * It allows usage of this module even without composer.
+ * The original Module.php is in 'src/{ModuleNamespace}' in order to respect PSR-0
+ */
+
+namespace Thorr\Persistence\Doctrine;
+
+use Thorr\Persistence\DataMapper\Manager\DataMapperManagerConfigProviderInterface;
+use Zend\ModuleManager\Feature;
+
+class Module implements
+    Feature\ConfigProviderInterface,
+    DataMapperManagerConfigProviderInterface
+{
+    /**
+     * {@inheritdoc}
+     */
+    public function getConfig()
+    {
+        return [
+            /**
+             * @see DataMapperAbstractFactory constants
+             */
+            'thorr_persistence_doctrine' => [
+                'object_manager' => '', // defaults to DataMapperAbstractFactory::OBJECT_MANAGER_ORM
+                'data_mappers' => [], // assign DataMappers to entities
+            ],
+
+            /**
+             * Doctrine mappings for Thorr\Persistence\Entity\AbstractEntity
+             */
+            'doctrine' => [
+                'driver' => [
+                    'thorr_persistence_doctrine_orm' => [
+                        'class' => \Doctrine\ORM\Mapping\Driver\XmlDriver::class,
+                        'paths' => __DIR__ . '/config',
+                    ],
+                    'thorr_persistence_doctrine_mongo_odm' => [
+                        'class' => \Doctrine\ODM\MongoDB\Mapping\Driver\XmlDriver::class,
+                        'paths' => __DIR__ . '/config',
+                    ],
+                    'orm_default' => [
+                        'drivers' => [
+                            'Thorr\Persistence\Entity' => 'thorr_persistence_doctrine_orm'
+                        ]
+                    ],
+                    'odm_default' => [
+                        'drivers' => [
+                            'Thorr\Persistence\Entity' => 'thorr_persistence_doctrine_mongo_odm',
+                        ]
+                    ]
+                ]
+            ],
+        ];
+    }
+
+    public function getDataMapperManagerConfig()
+    {
+        return [
+            'abstract_factories' => [
+                'Thorr\Persistence\Doctrine\Manager\DataMapperAbstractFactory'
+            ]
+        ];
+    }
+}
