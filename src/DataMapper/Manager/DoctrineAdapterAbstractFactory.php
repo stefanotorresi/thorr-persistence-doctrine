@@ -81,7 +81,7 @@ class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
         if (! $objectManager instanceof ObjectManager) {
             throw new Exception\InvalidServiceNameException(
                 'Invalid service configured in "[\'thorr_persistence_doctrine\'][\'object_manager\']" key. '
-                . sprintf(
+                .sprintf(
                     "Expected a '%s' instance, got '%s'.",
                     ObjectManager::class,
                     is_object($objectManager) ? get_class($objectManager) : gettype($objectManager)

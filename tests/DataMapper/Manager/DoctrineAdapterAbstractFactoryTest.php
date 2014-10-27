@@ -62,7 +62,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
         return [
             [
                 [],
-                false
+                false,
             ],
             [
                 ['thorr_persistence_doctrine' => []],
@@ -71,8 +71,8 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
             [
                 [
                     'thorr_persistence_doctrine' => [
-                        'data_mappers' => []
-                    ]
+                        'data_mappers' => [],
+                    ],
                 ],
                 false
             ],
@@ -80,9 +80,9 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                 [
                     'thorr_persistence_doctrine' => [
                         'data_mappers' => [
-                            DoctrineAdapter::class
-                        ]
-                    ]
+                            DoctrineAdapter::class,
+                        ],
+                    ],
                 ],
                 true
             ],
@@ -90,9 +90,9 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                 [
                     'thorr_persistence_doctrine' => [
                         'data_mappers' => [
-                            'some-entity-class-name' => DoctrineAdapter::class
-                        ]
-                    ]
+                            'some-entity-class-name' => DoctrineAdapter::class,
+                        ],
+                    ],
                 ],
                 true
             ],
@@ -105,9 +105,9 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
             'thorr_persistence_doctrine' => [
                 'object_manager' => 'SomeObjectManagerService',
                 'data_mappers' => [
-                    AbstractEntity::class => DoctrineAdapter::class
-                ]
-            ]
+                    AbstractEntity::class => DoctrineAdapter::class,
+                ],
+            ],
         ];
 
         $objectManager   = $this->getMock(ObjectManager::class);
@@ -158,9 +158,9 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
             'thorr_persistence_doctrine' => [
                 'object_manager' => 'SomeObjectManagerService',
                 'data_mappers' => [
-                    \stdClass::class
-                ]
-            ]
+                    \stdClass::class,
+                ],
+            ],
         ];
 
         $objectManager   = $this->getMock(ObjectManager::class);
@@ -194,10 +194,10 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                     'thorr_persistence_doctrine' => [
                         'object_manager' => 'SomeObjectManagerService',
                         'data_mappers' => [
-                            DoctrineAdapter::class
-                        ]
-                    ]
-                ]
+                            DoctrineAdapter::class,
+                        ],
+                    ],
+                ],
             ]
         ];
     }

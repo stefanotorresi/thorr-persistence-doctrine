@@ -54,7 +54,7 @@ class DoctrineAdapter implements DataMapperInterface, ObjectManagerAwareInterfac
     }
 
     /**
-     * @param  mixed $id
+     * @param  mixed       $id
      * @return object|null
      */
     public function findById($id)
@@ -63,7 +63,7 @@ class DoctrineAdapter implements DataMapperInterface, ObjectManagerAwareInterfac
     }
 
     /**
-     * @param  object $entity
+     * @param object $entity
      */
     public function remove($entity)
     {
@@ -79,7 +79,6 @@ class DoctrineAdapter implements DataMapperInterface, ObjectManagerAwareInterfac
         $entity = $this->findById($id);
         $this->remove($entity);
     }
-
 
     /**
      * @param object $entity

@@ -12,8 +12,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 trait ObjectManagerGuard
 {
     /**
-     * @param string        $expected   an ObjectManager implementation FQCN
-     * @param ObjectManager $actual     an ObjectManager instance
+     * @param string        $expected an ObjectManager implementation FQCN
+     * @param ObjectManager $actual   an ObjectManager instance
      */
     protected function guardForSpecificObjectManager($expected, ObjectManager $actual)
     {
