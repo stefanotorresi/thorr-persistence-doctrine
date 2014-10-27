@@ -16,16 +16,13 @@
     },
     "require-dev": {
         "zendframework/zend-modulemanager": "~2.3",
-        "zendframework/zend-servicemanager": "~2.3",
-        "doctrine/orm": "~2.4",
-        "doctrine/mongodb-odm": "~1.0@beta",
-        "jackalope/jackalope-doctrine-dbal": "~1.1",
-        "doctrine/phpcr-odm": "~1.2"
+        "zendframework/zend-servicemanager": "~2.3"
     },
     "suggest": {
         "zendframework/zend-modulemanager": "required to load the library as a ZF2 module",
-        "zendframework/zend-servicemanager": "required for DataMapperManager integration",
-        "doctrine/doctrine-orm-module" : "required to load AbstractEntity doctrine mapping"
+        "zendframework/zend-servicemanager": "required to create adapters via the DataMapperManager",
+        "doctrine/doctrine-orm-module" : "required to load AbstractEntity metadata into Doctrine ORM",
+        "doctrine/doctrine-mongo-odm-module" : "required to load AbstractEntity metadata into Doctrine Mongo ODM"
     },
     "extra": {
         "branch-alias": {

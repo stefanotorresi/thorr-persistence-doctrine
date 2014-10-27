@@ -28,8 +28,8 @@ class Module implements
              * @see DataMapperAbstractFactory constants
              */
             'thorr_persistence_doctrine' => [
-                'object_manager' => '', // defaults to DataMapperAbstractFactory::OBJECT_MANAGER_ORM
-                'data_mappers' => [], // assign DataMappers to entities
+                'object_manager' => 'doctrine.objectmanager.orm_default', // an ObjectManager service name
+                'data_mappers' => [], // Entity => DataMapper couples
             ],
 
             /**
@@ -38,11 +38,11 @@ class Module implements
             'doctrine' => [
                 'driver' => [
                     'thorr_persistence_doctrine_orm' => [
-                        'class' => \Doctrine\ORM\Mapping\Driver\XmlDriver::class,
+                        'class' => 'Doctrine\ORM\Mapping\Driver\XmlDriver',
                         'paths' => __DIR__ . '/config',
                     ],
                     'thorr_persistence_doctrine_mongo_odm' => [
-                        'class' => \Doctrine\ODM\MongoDB\Mapping\Driver\XmlDriver::class,
+                        'class' => 'Doctrine\ODM\MongoDB\Mapping\Driver\XmlDriver',
                         'paths' => __DIR__ . '/config',
                     ],
                     'orm_default' => [
