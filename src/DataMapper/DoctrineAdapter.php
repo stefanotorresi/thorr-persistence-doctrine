@@ -8,6 +8,7 @@
 namespace Thorr\Persistence\Doctrine\DataMapper;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use InvalidArgumentException;
 use Thorr\Persistence\DataMapper\DataMapperInterface;
 use Thorr\Persistence\Doctrine\ObjectManager\ObjectManagerAwareTrait;
 use Thorr\Persistence\Doctrine\ObjectManager\ObjectManagerAwareInterface;
@@ -22,12 +23,23 @@ class DoctrineAdapter implements DataMapperInterface, ObjectManagerAwareInterfac
     protected $entityClass;
 
     /**
-     * @param string        $entityClass
      * @param ObjectManager $objectManager
+     * @param string        $entityClass
      */
-    public function __construct($entityClass, ObjectManager $objectManager)
+    public function __construct(ObjectManager $objectManager, $entityClass = null)
     {
-        $this->entityClass = $entityClass;
+        if ($entityClass) {
+            $this->entityClass = $entityClass;
+        }
+
+        if (! $objectManager->getMetadataFactory()->hasMetadataFor($this->entityClass)) {
+            throw new InvalidArgumentException(sprintf(
+                '"%s" is not a valid entity class for requested mapper "%s"',
+                $entityClass,
+                __CLASS__
+            ));
+        }
+
         $this->setObjectManager($objectManager);
     }
 
@@ -42,10 +54,10 @@ class DoctrineAdapter implements DataMapperInterface, ObjectManagerAwareInterfac
     }
 
     /**
-     * @param  $id
+     * @param  mixed $id
      * @return object|null
      */
-    public function find($id)
+    public function findById($id)
     {
         return $this->objectManager->find($id, $this->entityClass);
     }
@@ -58,6 +70,16 @@ class DoctrineAdapter implements DataMapperInterface, ObjectManagerAwareInterfac
         $this->objectManager->remove($entity);
         $this->objectManager->flush();
     }
+
+    /**
+     * @param mixed $id
+     */
+    public function removeById($id)
+    {
+        $entity = $this->findById($id);
+        $this->remove($entity);
+    }
+
 
     /**
      * @param object $entity
