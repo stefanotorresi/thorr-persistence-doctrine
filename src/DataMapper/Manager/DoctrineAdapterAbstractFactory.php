@@ -16,14 +16,6 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
 {
-    const OBJECT_MANAGER_ORM   = 'Doctrine\ORM\EntityManager';
-    const OBJECT_MANAGER_MONGO = 'Doctrine\ODM\Mongo\DocumentManager';
-
-    protected $validObjectManagers = [
-        self::OBJECT_MANAGER_ORM,
-        self::OBJECT_MANAGER_MONGO
-    ];
-
     /**
      * {@inheritdoc}
      */
@@ -33,10 +25,6 @@ class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
             $serviceLocator->getServiceLocator() : $serviceLocator;
 
         $config = $serviceManager->get('config');
-
-        if (! $this->getObjectManager($serviceManager)) {
-            return false;
-        }
 
         if (! isset($config['thorr_persistence_doctrine']['data_mappers'])) {
             return false;
@@ -54,25 +42,18 @@ class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
         $serviceManager = $serviceLocator instanceof AbstractPluginManager ?
             $serviceLocator->getServiceLocator() : $serviceLocator;
 
-        $config = $serviceManager->get('config');
+        $objectManager = $this->getObjectManagerService($serviceManager);
 
+        $config = $serviceManager->get('config');
         $entityClass = array_search($requestedName, $config['thorr_persistence_doctrine']['data_mappers']);
 
-        $objectManager = $this->getObjectManager($serviceManager);
-
-        if (! $objectManager->getMetadataFactory()->hasMetadataFor($entityClass)) {
-            throw new Exception\InvalidServiceNameException(sprintf(
-                '"%s" is not a valid entity class for requested mapper "%s"',
-                $entityClass,
-                $requestedName
-            ));
-        }
-
-        $instance = new $requestedName($entityClass, $objectManager);
+        $instance = class_exists($entityClass) ?
+            new $requestedName($objectManager, $entityClass)
+            : new $requestedName($objectManager);
 
         if (! $instance instanceof DoctrineAdapter) {
             throw new Exception\InvalidServiceNameException(sprintf(
-                '"%s" must be a sub-class of "%s"',
+                '"%s" is not a sub-class of "%s"',
                 $requestedName,
                 DoctrineAdapter::class
             ));
@@ -85,23 +66,29 @@ class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
      * @param  ServiceLocatorInterface $serviceLocator
      * @return ObjectManager
      */
-    protected function getObjectManager(ServiceLocatorInterface $serviceLocator)
+    protected function getObjectManagerService(ServiceLocatorInterface $serviceLocator)
     {
-        if (! isset($config['thorr_persistence_doctrine']['object_manager'])) {
-            return static::OBJECT_MANAGER_ORM;
-        }
+        $config = $serviceLocator->get('config');
 
-        if (! in_array($config['thorr_persistence_doctrine']['object_manager'], $this->validObjectManagers)) {
-            throw new Exception\InvalidArgumentException(
-                'Invalid "[\'thorr_persistence_doctrine\'][\'object_manager\']" value in "config" service. '
-                . sprintf("Check %s constants for valid values", __CLASS__)
+        $objectManagerServiceName = isset($config['thorr_persistence_doctrine']['object_manager']) ?
+            $config['thorr_persistence_doctrine']['object_manager']
+            : null;
+
+        $objectManager = $serviceLocator->has($objectManagerServiceName) ?
+            $serviceLocator->get($objectManagerServiceName)
+            : null;
+
+        if (! $objectManager instanceof ObjectManager) {
+            throw new Exception\InvalidServiceNameException(
+                'Invalid service configured in "[\'thorr_persistence_doctrine\'][\'object_manager\']" key. '
+                . sprintf(
+                    "Expected a '%s' instance, got '%s'.",
+                    ObjectManager::class,
+                    is_object($objectManager) ? get_class($objectManager) : gettype($objectManager)
+                )
             );
         }
 
-        if (! $serviceLocator->has($config['thorr_persistence_doctrine']['object_manager'])) {
-            return;
-        }
-
-        return $serviceLocator->get($config['thorr_persistence_doctrine']['object_manager']);
+        return $objectManager;
     }
 }
