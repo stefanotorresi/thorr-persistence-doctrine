@@ -10,7 +10,7 @@ namespace Thorr\Persistence\Doctrine\ObjectManager;
 use Doctrine\Common\Persistence\ObjectManager;
 use InvalidArgumentException;
 
-trait ObjectManagerGuard
+trait ObjectManagerGuardTrait
 {
     /**
      * @param string        $expected an ObjectManager implementation FQCN

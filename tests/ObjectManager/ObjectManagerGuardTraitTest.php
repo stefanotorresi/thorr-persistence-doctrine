@@ -10,13 +10,13 @@ namespace Thorr\Persistence\Doctrine\Test\DataMapper;
 use Doctrine\Common\Persistence\ObjectManager;
 use InvalidArgumentException;
 use PHPUnit_Framework_TestCase as TestCase;
-use Thorr\Persistence\Doctrine\ObjectManager\ObjectManagerGuard;
+use Thorr\Persistence\Doctrine\ObjectManager\ObjectManagerGuardTrait;
 
-class ObjectManagerGuardTest extends TestCase
+class ObjectManagerGuardTraitTest extends TestCase
 {
     public function testGuardForSpecificObjectManager()
     {
-        $trait = $this->getMockForTrait(ObjectManagerGuard::class);
+        $trait = $this->getMockForTrait(ObjectManagerGuardTrait::class);
 
         $objectManager = $this->getMock(ObjectManager::class);
 
