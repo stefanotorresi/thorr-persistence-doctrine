@@ -51,6 +51,10 @@ class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
          * by default the associated entity class is a data_mappers array key
          * this makes possible to specify values in the config without a key,
          * but rather providing their own default entityClass via the getter
+         *
+         * note that this way, you can only retrieve an adapter by using its FQCN
+         * not via the manager's getDataMapperForEntity() method
+         *
          * @see DoctrineAdapter::getEntityClass()
          */
         $instance = is_string($entityClass) ?
