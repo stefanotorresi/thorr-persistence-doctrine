@@ -5,9 +5,10 @@
  * ************************************************
  */
 
-namespace Thorr\Persistence\Doctrine\DataMapper;
+namespace Thorr\Persistence\Doctrine\ObjectManager;
 
 use Doctrine\Common\Persistence\ObjectManager;
+use InvalidArgumentException;
 
 trait ObjectManagerGuard
 {
@@ -17,9 +18,9 @@ trait ObjectManagerGuard
      */
     protected function guardForSpecificObjectManager($expected, ObjectManager $actual)
     {
-        if (! $actual instanceof $expected) {
-            throw new \InvalidArgumentException(sprintf(
-                "This class needs a %s, %s given",
+        if (! is_a($actual, $expected)) {
+            throw new InvalidArgumentException(sprintf(
+                "Expected '%s', got '%s'",
                 $expected,
                 get_class($actual)
             ));
