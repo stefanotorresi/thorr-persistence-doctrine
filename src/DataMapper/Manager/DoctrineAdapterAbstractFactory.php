@@ -26,11 +26,11 @@ class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
 
         $config = $serviceManager->get('config');
 
-        if (! isset($config['thorr_persistence_doctrine']['data_mappers'])) {
+        if (! isset($config['thorr_persistence']['data_mappers'])) {
             return false;
         }
 
-        return in_array($requestedName, $config['thorr_persistence_doctrine']['data_mappers']);
+        return in_array($requestedName, $config['thorr_persistence']['data_mappers']) && class_exists($requestedName);
     }
 
     /**
@@ -45,9 +45,15 @@ class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
         $objectManager = $this->getObjectManagerService($serviceManager);
 
         $config = $serviceManager->get('config');
-        $entityClass = array_search($requestedName, $config['thorr_persistence_doctrine']['data_mappers']);
+        $entityClass = array_search($requestedName, $config['thorr_persistence']['data_mappers']);
 
-        $instance = class_exists($entityClass) ?
+        /**
+         * by default the associated entity class is a data_mappers array key
+         * this makes possible to specify values in the config without a key,
+         * but rather providing their own default entityClass via the getter
+         * @see DoctrineAdapter::getEntityClass()
+         */
+        $instance = is_string($entityClass) ?
             new $requestedName($objectManager, $entityClass)
             : new $requestedName($objectManager);
 
@@ -70,8 +76,8 @@ class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
     {
         $config = $serviceLocator->get('config');
 
-        $objectManagerServiceName = isset($config['thorr_persistence_doctrine']['object_manager']) ?
-            $config['thorr_persistence_doctrine']['object_manager']
+        $objectManagerServiceName = isset($config['thorr_persistence']['doctrine']['object_manager']) ?
+            $config['thorr_persistence']['doctrine']['object_manager']
             : null;
 
         $objectManager = $serviceLocator->has($objectManagerServiceName) ?
@@ -80,7 +86,7 @@ class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
 
         if (! $objectManager instanceof ObjectManager) {
             throw new Exception\InvalidServiceNameException(
-                'Invalid service configured in "[\'thorr_persistence_doctrine\'][\'object_manager\']" key. '
+                "Invalid service configured in '['thorr_persistence']['doctrine']['object_manager']' key. "
                 .sprintf(
                     "Expected a '%s' instance, got '%s'.",
                     ObjectManager::class,

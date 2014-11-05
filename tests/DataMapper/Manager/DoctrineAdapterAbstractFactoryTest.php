@@ -65,12 +65,12 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                 false,
             ],
             [
-                ['thorr_persistence_doctrine' => []],
+                ['thorr_persistence' => []],
                 false
             ],
             [
                 [
-                    'thorr_persistence_doctrine' => [
+                    'thorr_persistence' => [
                         'data_mappers' => [],
                     ],
                 ],
@@ -78,7 +78,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
             ],
             [
                 [
-                    'thorr_persistence_doctrine' => [
+                    'thorr_persistence' => [
                         'data_mappers' => [
                             DoctrineAdapter::class,
                         ],
@@ -88,7 +88,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
             ],
             [
                 [
-                    'thorr_persistence_doctrine' => [
+                    'thorr_persistence' => [
                         'data_mappers' => [
                             'some-entity-class-name' => DoctrineAdapter::class,
                         ],
@@ -102,8 +102,10 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
     public function testCreateService()
     {
         $config = [
-            'thorr_persistence_doctrine' => [
-                'object_manager' => 'SomeObjectManagerService',
+            'thorr_persistence' => [
+                'doctrine' => [
+                    'object_manager' => 'SomeObjectManagerService',
+                ],
                 'data_mappers' => [
                     AbstractEntity::class => DoctrineAdapter::class,
                 ],
@@ -124,7 +126,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
 
         $this->serviceLocator->expects($this->atLeastOnce())
             ->method('has')
-            ->with($config['thorr_persistence_doctrine']['object_manager'])
+            ->with($config['thorr_persistence']['doctrine']['object_manager'])
             ->willReturn(true);
 
         $this->serviceLocator->expects($this->atLeastOnce())
@@ -133,7 +135,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                 switch ($name) {
                     case 'config' :
                         return $config;
-                    case $config['thorr_persistence_doctrine']['object_manager'] :
+                    case $config['thorr_persistence']['doctrine']['object_manager'] :
                         return $objectManager;
                 }
             });
@@ -155,8 +157,10 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
     public function testInvalidAdapterClass()
     {
         $config = [
-            'thorr_persistence_doctrine' => [
-                'object_manager' => 'SomeObjectManagerService',
+            'thorr_persistence' => [
+                'doctrine' => [
+                    'object_manager' => 'SomeObjectManagerService',
+                ],
                 'data_mappers' => [
                     \stdClass::class,
                 ],
@@ -167,7 +171,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
 
         $this->serviceLocator->expects($this->atLeastOnce())
             ->method('has')
-            ->with($config['thorr_persistence_doctrine']['object_manager'])
+            ->with($config['thorr_persistence']['doctrine']['object_manager'])
             ->willReturn(true);
 
         $this->serviceLocator->expects($this->atLeastOnce())
@@ -176,7 +180,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                 switch ($name) {
                     case 'config' :
                         return $config;
-                    case $config['thorr_persistence_doctrine']['object_manager'] :
+                    case $config['thorr_persistence']['doctrine']['object_manager'] :
                         return $objectManager;
                 }
             });
@@ -191,8 +195,10 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
         return [
             [
                 [
-                    'thorr_persistence_doctrine' => [
-                        'object_manager' => 'SomeObjectManagerService',
+                    'thorr_persistence' => [
+                        'doctrine' => [
+                            'object_manager' => 'SomeObjectManagerService',
+                        ],
                         'data_mappers' => [
                             DoctrineAdapter::class,
                         ],

@@ -45,6 +45,9 @@ class DoctrineAdapter implements DataMapperInterface, ObjectManagerAwareInterfac
 
     /**
      * The entity class handled by this adapter. It's immutable.
+     * Can be set at instantiation or provided as default value by a subclass
+     *
+     * @see Thorr\Persistence\Doctrine\DataMapper\Manager\DoctrineAdapterAbstractFactory::createServiceWithName()
      *
      * @return string
      */
@@ -94,6 +97,6 @@ class DoctrineAdapter implements DataMapperInterface, ObjectManagerAwareInterfac
      */
     public function update($entity)
     {
-        $this->objectManager->flush($entity);
+        $this->save($entity);
     }
 }
