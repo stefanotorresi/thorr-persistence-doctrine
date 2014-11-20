@@ -21,36 +21,9 @@ class DoctrineAdapterTest extends TestCase
     public function testConstructor()
     {
         $objectManager = $this->getMock(ObjectManager::class);
-        $metadataFactory = $this->getMock(ClassMetadataFactory::class);
-
-        $objectManager->expects($this->any())
-            ->method('getMetadataFactory')
-            ->willReturn($metadataFactory);
-
-        $metadataFactory->expects($this->any())
-            ->method('hasMetadataFor')
-            ->with(AbstractEntity::class)
-            ->willReturn(true);
 
         $adapter = new DoctrineAdapter($objectManager, AbstractEntity::class);
         $this->assertSame(AbstractEntity::class, $adapter->getEntityClass());
-    }
-
-    public function testInvalidEntityClassName()
-    {
-        $objectManager = $this->getMock(ObjectManager::class);
-        $metadataFactory = $this->getMock(ClassMetadataFactory::class);
-
-        $objectManager->expects($this->any())
-            ->method('getMetadataFactory')
-            ->willReturn($metadataFactory);
-
-        $metadataFactory->expects($this->any())
-            ->method('hasMetadataFor')
-            ->with(null)
-            ->willReturn(false);
-
-        $this->setExpectedException(\InvalidArgumentException::class, 'not a valid entity class');
-        $adapter = new DoctrineAdapter($objectManager);
+        $this->assertSame($objectManager, $adapter->getObjectManager());
     }
 }

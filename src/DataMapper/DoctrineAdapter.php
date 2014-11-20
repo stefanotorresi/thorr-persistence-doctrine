@@ -32,14 +32,6 @@ class DoctrineAdapter implements DataMapperInterface, ObjectManagerAwareInterfac
             $this->entityClass = $entityClass;
         }
 
-        if (! $objectManager->getMetadataFactory()->hasMetadataFor($this->entityClass)) {
-            throw new InvalidArgumentException(sprintf(
-                '"%s" is not a valid entity class for requested mapper "%s"',
-                $entityClass,
-                __CLASS__
-            ));
-        }
-
         $this->setObjectManager($objectManager);
     }
 
