@@ -63,7 +63,7 @@ class Module implements
     {
         return [
             'abstract_factories' => [
-                'Thorr\Persistence\Doctrine\Manager\DataMapperAbstractFactory'
+                DataMapper\Manager\DoctrineAdapterAbstractFactory::class
             ]
         ];
     }
