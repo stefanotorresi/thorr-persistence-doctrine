@@ -18,7 +18,7 @@ trait ObjectManagerGuardTrait
      */
     protected function guardForSpecificObjectManager($expected, ObjectManager $actual)
     {
-        if (! is_a($actual, $expected)) {
+        if (! $actual instanceof $expected) {
             throw new InvalidArgumentException(sprintf(
                 "Expected '%s', got '%s'",
                 $expected,
