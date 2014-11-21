@@ -8,7 +8,6 @@
 namespace Thorr\Persistence\Doctrine\DataMapper;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use InvalidArgumentException;
 use Thorr\Persistence\DataMapper\DataMapperInterface;
 use Thorr\Persistence\Doctrine\ObjectManager\ObjectManagerAwareTrait;
 use Thorr\Persistence\Doctrine\ObjectManager\ObjectManagerAwareInterface;

@@ -7,7 +7,6 @@
 
 namespace Thorr\Persistence\Doctrine\Test\DataMapper;
 
-use Doctrine\Common\Persistence\Mapping\ClassMetadataFactory;
 use Doctrine\Common\Persistence\ObjectManager;
 use PHPUnit_Framework_TestCase as TestCase;
 use Thorr\Persistence\Doctrine\DataMapper\DoctrineAdapter;
