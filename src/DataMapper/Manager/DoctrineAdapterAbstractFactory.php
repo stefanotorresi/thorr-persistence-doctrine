@@ -26,11 +26,25 @@ class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
 
         $config = $serviceManager->get('config');
 
-        if (! isset($config['thorr_persistence']['data_mappers'])) {
+        if (! isset($config['thorr_persistence_dmm']['doctrine']['data_mappers'][$requestedName])) {
             return false;
         }
 
-        return in_array($requestedName, $config['thorr_persistence']['data_mappers']) && class_exists($requestedName);
+        $dataMapperSpec = $config['thorr_persistence_dmm']['doctrine']['data_mappers'][$requestedName];
+
+        if (! is_array($dataMapperSpec) && ! is_string($dataMapperSpec)) {
+            return false;
+        }
+
+        if (is_string($dataMapperSpec) && ! class_exists($dataMapperSpec)) {
+            return false;
+        }
+
+        if (is_array($dataMapperSpec) && (! isset($dataMapperSpec['class']) || ! class_exists($dataMapperSpec['class']))) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -42,29 +56,20 @@ class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
         $serviceManager = $serviceLocator instanceof AbstractPluginManager ?
             $serviceLocator->getServiceLocator() : $serviceLocator;
 
+        $config = $serviceManager->get('config');
+
+        $dataMapperSpec = $config['thorr_persistence_dmm']['doctrine']['data_mappers'][$requestedName];
+        $dataMapperClassName = is_string($dataMapperSpec) ? $dataMapperSpec : $dataMapperSpec['class'];
+
+        $entityClass = array_search($requestedName, $config['thorr_persistence_dmm']['entity_data_mapper_map']);
         $objectManager = $this->getObjectManagerService($serviceManager);
 
-        $config = $serviceManager->get('config');
-        $entityClass = array_search($requestedName, $config['thorr_persistence']['data_mappers']);
-
-        /**
-         * by default the associated entity class is a data_mappers array key
-         * this makes possible to specify values in the config without a key,
-         * but rather providing their own default entityClass via the getter
-         *
-         * note that this way, you can only retrieve an adapter by using its FQCN
-         * not via the manager's getDataMapperForEntity() method
-         *
-         * @see DoctrineAdapter::getEntityClass()
-         */
-        $instance = is_string($entityClass) ?
-            new $requestedName($objectManager, $entityClass)
-            : new $requestedName($objectManager);
+        $instance = new $dataMapperClassName($entityClass, $objectManager);
 
         if (! $instance instanceof DoctrineAdapter) {
-            throw new Exception\InvalidServiceNameException(sprintf(
-                '"%s" is not a sub-class of "%s"',
-                $requestedName,
+            throw new Exception\ServiceNotCreatedException(sprintf(
+                'Invalid data mapper type: "%s" is not a subtype of "%s"',
+                $dataMapperClassName,
                 DoctrineAdapter::class
             ));
         }
@@ -80,8 +85,8 @@ class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
     {
         $config = $serviceLocator->get('config');
 
-        $objectManagerServiceName = isset($config['thorr_persistence']['doctrine']['object_manager']) ?
-            $config['thorr_persistence']['doctrine']['object_manager']
+        $objectManagerServiceName = isset($config['thorr_persistence_dmm']['doctrine']['object_manager']) ?
+            $config['thorr_persistence_dmm']['doctrine']['object_manager']
             : null;
 
         $objectManager = $serviceLocator->has($objectManagerServiceName) ?
@@ -89,14 +94,11 @@ class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
             : null;
 
         if (! $objectManager instanceof ObjectManager) {
-            throw new Exception\InvalidServiceNameException(
-                "Invalid service configured in '['thorr_persistence']['doctrine']['object_manager']' key. "
-                .sprintf(
-                    "Expected a '%s' instance, got '%s'.",
-                    ObjectManager::class,
-                    is_object($objectManager) ? get_class($objectManager) : gettype($objectManager)
-                )
-            );
+            throw new Exception\InvalidServiceNameException(sprintf(
+                'Invalid object manager type: "%s" is not a subtype of "%s"',
+                is_object($objectManager) ? get_class($objectManager) : gettype($objectManager),
+                ObjectManager::class
+            ));
         }
 
         return $objectManager;

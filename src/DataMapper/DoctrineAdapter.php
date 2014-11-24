@@ -25,20 +25,14 @@ class DoctrineAdapter implements DataMapperInterface, ObjectManagerAwareInterfac
      * @param ObjectManager $objectManager
      * @param string        $entityClass
      */
-    public function __construct(ObjectManager $objectManager, $entityClass = null)
+    public function __construct($entityClass, ObjectManager $objectManager)
     {
-        if ($entityClass) {
-            $this->entityClass = $entityClass;
-        }
-
+        $this->entityClass = $entityClass;
         $this->setObjectManager($objectManager);
     }
 
     /**
-     * The entity class handled by this adapter. It's immutable.
-     * Can be set at instantiation or provided as default value by a subclass
-     *
-     * @see Thorr\Persistence\Doctrine\DataMapper\Manager\DoctrineAdapterAbstractFactory::createServiceWithName()
+     * The entity class handled by this adapter. Must be set during instantiation and it's immutable.
      *
      * @return string
      */

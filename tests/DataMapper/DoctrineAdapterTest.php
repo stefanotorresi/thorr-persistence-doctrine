@@ -21,7 +21,7 @@ class DoctrineAdapterTest extends TestCase
     {
         $objectManager = $this->getMock(ObjectManager::class);
 
-        $adapter = new DoctrineAdapter($objectManager, AbstractEntity::class);
+        $adapter = new DoctrineAdapter(AbstractEntity::class, $objectManager);
         $this->assertSame(AbstractEntity::class, $adapter->getEntityClass());
         $this->assertSame($objectManager, $adapter->getObjectManager());
     }
