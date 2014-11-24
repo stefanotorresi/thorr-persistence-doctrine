@@ -24,11 +24,11 @@ class Module implements
     public function getConfig()
     {
         return [
-            'thorr_persistence' => [
+            'thorr_persistence_dmm' => [
                 'doctrine' => [
                     'object_manager' => 'doctrine.objectmanager.orm_default', // an ObjectManager service name
+                    'adapters' => [], // DataMapperServiceName => Spec couples
                 ],
-                'data_mappers' => [], // Entity => DataMapper couples
             ],
 
             /**

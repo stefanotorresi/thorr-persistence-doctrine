@@ -26,11 +26,11 @@ class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
 
         $config = $serviceManager->get('config');
 
-        if (! isset($config['thorr_persistence_dmm']['doctrine']['data_mappers'][$requestedName])) {
+        if (! isset($config['thorr_persistence_dmm']['doctrine']['adapters'][$requestedName])) {
             return false;
         }
 
-        $dataMapperSpec = $config['thorr_persistence_dmm']['doctrine']['data_mappers'][$requestedName];
+        $dataMapperSpec = $config['thorr_persistence_dmm']['doctrine']['adapters'][$requestedName];
 
         if (! is_array($dataMapperSpec) && ! is_string($dataMapperSpec)) {
             return false;
@@ -58,7 +58,7 @@ class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
 
         $config = $serviceManager->get('config');
 
-        $dataMapperSpec = $config['thorr_persistence_dmm']['doctrine']['data_mappers'][$requestedName];
+        $dataMapperSpec = $config['thorr_persistence_dmm']['doctrine']['adapters'][$requestedName];
         $dataMapperClassName = is_string($dataMapperSpec) ? $dataMapperSpec : $dataMapperSpec['class'];
 
         $entityClass = array_search($requestedName, $config['thorr_persistence_dmm']['entity_data_mapper_map']);

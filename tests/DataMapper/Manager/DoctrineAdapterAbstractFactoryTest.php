@@ -81,7 +81,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                 [
                     'thorr_persistence_dmm' => [
                         'doctrine' => [
-                            'data_mappers' => [],
+                            'adapters' => [],
                         ],
                     ],
                 ],
@@ -92,7 +92,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                 [
                     'thorr_persistence_dmm' => [
                         'doctrine' => [
-                            'data_mappers' => [
+                            'adapters' => [
                                 'SomeDataMapperServiceName' => 123,
                             ],
                         ],
@@ -105,7 +105,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                 [
                     'thorr_persistence_dmm' => [
                         'doctrine' => [
-                            'data_mappers' => [
+                            'adapters' => [
                                 'SomeDataMapperServiceName' => DoctrineAdapter::class,
                             ],
                         ],
@@ -118,7 +118,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                 [
                     'thorr_persistence_dmm' => [
                         'doctrine' => [
-                            'data_mappers' => [
+                            'adapters' => [
                                 'SomeDataMapperServiceName' => 'not-a-class',
                             ],
                         ],
@@ -131,7 +131,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                 [
                     'thorr_persistence_dmm' => [
                         'doctrine' => [
-                            'data_mappers' => [
+                            'adapters' => [
                                 'SomeDataMapperServiceName' => [
                                     'class' => DoctrineAdapter::class,
                                 ],
@@ -146,7 +146,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                 [
                     'thorr_persistence_dmm' => [
                         'doctrine' => [
-                            'data_mappers' => [
+                            'adapters' => [
                                 'SomeDataMapperServiceName' => [],
                             ],
                         ],
@@ -159,7 +159,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                 [
                     'thorr_persistence_dmm' => [
                         'doctrine' => [
-                            'data_mappers' => [
+                            'adapters' => [
                                 'SomeDataMapperServiceName' => [
                                     'class' => 'not-a-class',
                                 ],
@@ -215,9 +215,9 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
             $config['thorr_persistence_dmm']['entity_data_mapper_map'][$instance->getEntityClass()]
         );
 
-        if (isset($config['thorr_persistence_dmm']['doctrine']['data_mappers'][$requestedName]['object_manager'])) {
+        if (isset($config['thorr_persistence_dmm']['doctrine']['adapters'][$requestedName]['object_manager'])) {
             $this->assertSame(
-                $objectManagers[$config['thorr_persistence_dmm']['doctrine']['data_mappers'][$requestedName]['object_manager']],
+                $objectManagers[$config['thorr_persistence_dmm']['doctrine']['adapters'][$requestedName]['object_manager']],
                 $instance->getObjectManager()
             );
         }
@@ -232,7 +232,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                     'thorr_persistence_dmm' => [
                         'doctrine' => [
                             'object_manager' => 'SomeObjectManagerService',
-                            'data_mappers' => [
+                            'adapters' => [
                                 'SomeDataMapperServiceName' => DoctrineAdapter::class,
                             ],
                         ],
@@ -252,7 +252,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                     'thorr_persistence_dmm' => [
                         'doctrine' => [
                             'object_manager' => 'SomeObjectManagerService',
-                            'data_mappers' => [
+                            'adapters' => [
                                 'SomeDataMapperServiceName' => \stdClass::class,
                             ],
                         ],
@@ -272,7 +272,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                     'thorr_persistence_dmm' => [
                         'doctrine' => [
                             'object_manager' => 'SomeObjectManagerService',
-                            'data_mappers' => [
+                            'adapters' => [
                                 'SomeDataMapperServiceName' => [
                                     'class' => DoctrineAdapter::class,
                                     'object_manager' => 'AnotherObjectManagerService',
@@ -298,7 +298,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
             'thorr_persistence_dmm' => [
                 'doctrine' => [
                     'object_manager' => 'SomeObjectManagerService',
-                    'data_mappers' => [
+                    'adapters' => [
                         'SomeDataMapperServiceName' => DoctrineAdapter::class,
                     ],
                 ],
