@@ -71,7 +71,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
             [
                 [
                     'thorr_persistence_dmm' => [
-                        'doctrine' => []
+                        'doctrine' => [],
                     ],
                 ],
                 'anything',
@@ -82,7 +82,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                     'thorr_persistence_dmm' => [
                         'doctrine' => [
                             'data_mappers' => [],
-                        ]
+                        ],
                     ],
                 ],
                 'anything',
@@ -134,9 +134,9 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                             'data_mappers' => [
                                 'SomeDataMapperServiceName' => [
                                     'class' => DoctrineAdapter::class,
-                                ]
+                                ],
                             ],
-                        ]
+                        ],
                     ],
                 ],
                 'SomeDataMapperServiceName',
@@ -147,9 +147,9 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                     'thorr_persistence_dmm' => [
                         'doctrine' => [
                             'data_mappers' => [
-                                'SomeDataMapperServiceName' => []
+                                'SomeDataMapperServiceName' => [],
                             ],
-                        ]
+                        ],
                     ],
                 ],
                 'SomeDataMapperServiceName',
@@ -162,9 +162,9 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                             'data_mappers' => [
                                 'SomeDataMapperServiceName' => [
                                     'class' => 'not-a-class',
-                                ]
+                                ],
                             ],
-                        ]
+                        ],
                     ],
                 ],
                 'SomeDataMapperServiceName',
@@ -226,7 +226,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                         ],
                         'entity_data_mapper_map' => [
                             'SomeEntityClass' => 'SomeDataMapperServiceName',
-                        ]
+                        ],
                     ],
                 ],
                 // $requestedName
@@ -246,7 +246,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                         ],
                         'entity_data_mapper_map' => [
                             'SomeEntityClass' => 'SomeDataMapperServiceName',
-                        ]
+                        ],
                     ],
                 ],
                 // $requestedName
@@ -267,7 +267,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                         'SomeDataMapperServiceName' => DoctrineAdapter::class,
                     ],
                 ],
-                'entity_data_mapper_map' => []
+                'entity_data_mapper_map' => [],
             ],
         ];
 
