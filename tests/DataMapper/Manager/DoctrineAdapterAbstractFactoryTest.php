@@ -179,21 +179,26 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
      */
     public function testCreateService($config, $requestedName, $expectedException)
     {
-        $objectManager   = $this->getMock(ObjectManager::class);
+        $objectManagers = [
+            'SomeObjectManagerService' => $this->getMock(ObjectManager::class, [], [], 'SomeObjectManagerService'),
+            'AnotherObjectManagerService' => $this->getMock(ObjectManager::class, [], [], 'AnotherObjectManagerService'),
+        ];
 
-        $this->serviceLocator->expects($this->atLeastOnce())
+        $this->serviceLocator->expects($this->any())
             ->method('has')
-            ->with($config['thorr_persistence_dmm']['doctrine']['object_manager'])
-            ->willReturn(true);
+            ->willReturnCallback(function ($name) use ($objectManagers) {
+                return array_key_exists($name, $objectManagers);
+            });
 
-        $this->serviceLocator->expects($this->atLeastOnce())
+        $this->serviceLocator->expects($this->any())
             ->method('get')
-            ->willReturnCallback(function ($name) use ($config, $objectManager) {
+            ->willReturnCallback(function ($name) use ($config, $objectManagers) {
                 switch ($name) {
                     case 'config' :
                         return $config;
-                    case $config['thorr_persistence_dmm']['doctrine']['object_manager'] :
-                        return $objectManager;
+                    case 'SomeObjectManagerService' :
+                    case 'AnotherObjectManagerService' :
+                        return $objectManagers[$name];
                 }
             });
 
@@ -209,6 +214,13 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
             $requestedName,
             $config['thorr_persistence_dmm']['entity_data_mapper_map'][$instance->getEntityClass()]
         );
+
+        if (isset($config['thorr_persistence_dmm']['doctrine']['data_mappers'][$requestedName]['object_manager'])) {
+            $this->assertSame(
+                $objectManagers[$config['thorr_persistence_dmm']['doctrine']['data_mappers'][$requestedName]['object_manager']],
+                $instance->getObjectManager()
+            );
+        }
     }
 
     public function createServiceConfigProvider()
@@ -253,6 +265,29 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                 'SomeDataMapperServiceName',
                 // $expectedException
                 [ SMException\ServiceNotCreatedException::class, "Invalid data mapper type" ]
+            ],
+            [
+                // $config
+                [
+                    'thorr_persistence_dmm' => [
+                        'doctrine' => [
+                            'object_manager' => 'SomeObjectManagerService',
+                            'data_mappers' => [
+                                'SomeDataMapperServiceName' => [
+                                    'class' => DoctrineAdapter::class,
+                                    'object_manager' => 'AnotherObjectManagerService',
+                                ],
+                            ],
+                        ],
+                        'entity_data_mapper_map' => [
+                            'SomeEntityClass' => 'SomeDataMapperServiceName',
+                        ],
+                    ],
+                ],
+                // $requestedName
+                'SomeDataMapperServiceName',
+                // $expectedException
+                null,
             ],
         ];
     }

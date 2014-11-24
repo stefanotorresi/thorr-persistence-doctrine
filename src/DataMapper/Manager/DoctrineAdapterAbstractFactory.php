@@ -62,7 +62,10 @@ class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
         $dataMapperClassName = is_string($dataMapperSpec) ? $dataMapperSpec : $dataMapperSpec['class'];
 
         $entityClass = array_search($requestedName, $config['thorr_persistence_dmm']['entity_data_mapper_map']);
-        $objectManager = $this->getObjectManagerService($serviceManager);
+
+        $objectManagerServiceName = isset($dataMapperSpec['object_manager']) ? $dataMapperSpec['object_manager'] : null;
+
+        $objectManager = $this->getObjectManagerService($serviceManager, $objectManagerServiceName);
 
         $instance = new $dataMapperClassName($entityClass, $objectManager);
 
@@ -79,17 +82,18 @@ class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
 
     /**
      * @param  ServiceLocatorInterface $serviceLocator
+     * @param  string                  $objectManagerServiceName
      * @return ObjectManager
      */
-    protected function getObjectManagerService(ServiceLocatorInterface $serviceLocator)
+    protected function getObjectManagerService(ServiceLocatorInterface $serviceLocator, $objectManagerServiceName)
     {
         $config = $serviceLocator->get('config');
 
-        $objectManagerServiceName = isset($config['thorr_persistence_dmm']['doctrine']['object_manager']) ?
-            $config['thorr_persistence_dmm']['doctrine']['object_manager']
-            : null;
+        if (! $objectManagerServiceName && isset($config['thorr_persistence_dmm']['doctrine']['object_manager'])) {
+            $objectManagerServiceName = $config['thorr_persistence_dmm']['doctrine']['object_manager'];
+        }
 
-        $objectManager = $serviceLocator->has($objectManagerServiceName) ?
+        $objectManager = $objectManagerServiceName && $serviceLocator->has($objectManagerServiceName) ?
             $serviceLocator->get($objectManagerServiceName)
             : null;
 
