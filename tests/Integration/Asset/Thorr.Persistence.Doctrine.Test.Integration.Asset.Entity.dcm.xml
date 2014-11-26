@@ -4,8 +4,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                                       http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <mapped-superclass name="Thorr\Persistence\Entity\AbstractEntity">
-        <id name="uuid" type="uuid" />
-    </mapped-superclass>
+    <entity name="Thorr\Persistence\Doctrine\Test\Integration\Asset\Entity" table="test_entities">
+    </entity>
 
 </doctrine-mapping>

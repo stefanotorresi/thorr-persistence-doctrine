@@ -10,12 +10,21 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuite>
-        <directory>./tests/</directory>
+        <directory>tests</directory>
+    </testsuite>
+
+    <testsuite name="UnitTests">
+        <directory>tests</directory>
+        <exclude>tests/Integration</exclude>
+    </testsuite>
+
+    <testsuite name="IntegrationTests">
+        <directory>tests/Integration</directory>
     </testsuite>
 
     <filter>
         <whitelist>
-            <directory>./src/</directory>
+            <directory>src</directory>
         </whitelist>
     </filter>
 </phpunit>

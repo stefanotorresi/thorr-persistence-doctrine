@@ -42,16 +42,15 @@ class DoctrineAdapter implements DataMapperInterface, ObjectManagerAwareInterfac
     }
 
     /**
-     * @param  mixed       $id
-     * @return object|null
+     * {@inheritdoc}
      */
-    public function findById($id)
+    public function findByUuid($uuid)
     {
-        return $this->objectManager->find($id, $this->entityClass);
+        return $this->objectManager->getRepository($this->entityClass)->findOneBy(['uuid' => $uuid]);
     }
 
     /**
-     * @param object $entity
+     * {@inheritdoc}
      */
     public function remove($entity)
     {
@@ -60,16 +59,16 @@ class DoctrineAdapter implements DataMapperInterface, ObjectManagerAwareInterfac
     }
 
     /**
-     * @param mixed $id
+     * {@inheritdoc}
      */
-    public function removeById($id)
+    public function removeByUuid($uuid)
     {
-        $entity = $this->findById($id);
+        $entity = $this->findByUuid($uuid);
         $this->remove($entity);
     }
 
     /**
-     * @param object $entity
+     * {@inheritdoc}
      */
     public function save($entity)
     {
@@ -78,7 +77,7 @@ class DoctrineAdapter implements DataMapperInterface, ObjectManagerAwareInterfac
     }
 
     /**
-     * @param object $entity
+     * {@inheritdoc}
      */
     public function update($entity)
     {

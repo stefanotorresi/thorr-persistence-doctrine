@@ -11,6 +11,7 @@
 
 namespace Thorr\Persistence\Doctrine;
 
+use Rhumsaa\Uuid\Doctrine\UuidType;
 use Thorr\Persistence\DataMapper\Manager\DataMapperManagerConfigProviderInterface;
 use Zend\ModuleManager\Feature;
 
@@ -54,7 +55,14 @@ class Module implements
                             'Thorr\Persistence\Entity' => 'thorr_persistence_doctrine_mongo_odm',
                         ]
                     ]
-                ]
+                ],
+                'configuration' => [
+                    'orm_default' => [
+                        'types' => [
+                            'uuid' => UuidType::class,
+                        ],
+                    ],
+                ],
             ],
         ];
     }

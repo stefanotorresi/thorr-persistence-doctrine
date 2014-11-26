@@ -16,7 +16,8 @@
     },
     "require-dev": {
         "zendframework/zend-modulemanager": "~2.3",
-        "zendframework/zend-servicemanager": "~2.3"
+        "zendframework/zend-servicemanager": "~2.3",
+        "doctrine/orm": "~2.4"
     },
     "suggest": {
         "zendframework/zend-modulemanager": "required to load the library as a ZF2 module",
