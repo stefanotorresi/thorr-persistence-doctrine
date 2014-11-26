@@ -65,6 +65,10 @@ class ORMIntegrationTest extends TestCase
             sprintf('Failed to find an entity with uuid %s', $uuid)
         );
 
+        $this->assertSame($entity, $this->adapter->findByUuid((string) $uuid),
+            sprintf('Failed to find an entity with string casted uuid %s', $uuid)
+        );
+
         $this->adapter->removeByUuid($uuid);
 
         $this->assertNull($this->adapter->findByUuid($uuid));
