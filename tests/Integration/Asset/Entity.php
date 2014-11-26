@@ -11,5 +11,4 @@ use Thorr\Persistence\Entity\AbstractEntity;
 
 class Entity extends AbstractEntity
 {
-
 }

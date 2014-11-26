@@ -33,10 +33,9 @@ class ORMIntegrationTest extends TestCase
             'memory' => true,
         ];
 
-
         $driver = new MappingDriverChain();
         $driver->addDriver(new XmlDriver('config'), AbstractEntity::class);
-        $driver->addDriver(new XmlDriver(__DIR__ . '/Asset'), Asset\Entity::class);
+        $driver->addDriver(new XmlDriver(__DIR__.'/Asset'), Asset\Entity::class);
 
         $config = Setup::createConfiguration(true);
         $config->setMetadataDriverImpl($driver);
