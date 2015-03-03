@@ -56,13 +56,6 @@ class Module implements
                         ]
                     ]
                 ],
-                'configuration' => [
-                    'orm_default' => [
-                        'types' => [
-                            'uuid' => UuidType::class,
-                        ],
-                    ],
-                ],
             ],
         ];
     }

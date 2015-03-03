@@ -8,13 +8,11 @@
 namespace Thorr\Persistence\Doctrine\Test\Integration;
 
 use Doctrine\Common\Persistence\Mapping\Driver\MappingDriverChain;
-use Doctrine\DBAL\Types\Type;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Driver\XmlDriver;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\Setup;
 use PHPUnit_Framework_TestCase as TestCase;
-use Rhumsaa\Uuid\Doctrine\UuidType;
 use Rhumsaa\Uuid\Uuid;
 use Thorr\Persistence\Doctrine\DataMapper\DoctrineAdapter;
 use Thorr\Persistence\Entity\AbstractEntity;
@@ -40,8 +38,6 @@ class ORMIntegrationTest extends TestCase
         $config = Setup::createConfiguration(true);
         $config->setMetadataDriverImpl($driver);
 
-        Type::addType('uuid', UuidType::class);
-
         $entityManager = EntityManager::create($conn, $config);
 
         $classes    = $entityManager->getMetadataFactory()->getAllMetadata();
@@ -65,8 +61,8 @@ class ORMIntegrationTest extends TestCase
             sprintf('Failed to find an entity with uuid %s', $uuid)
         );
 
-        $this->assertSame($entity, $this->adapter->findByUuid((string) $uuid),
-            sprintf('Failed to find an entity with string casted uuid %s', $uuid)
+        $this->assertSame($entity, $this->adapter->findByUuid(Uuid::fromString($uuid)),
+            'Failed to find an entity with uuid object'
         );
 
         $this->adapter->removeByUuid($uuid);

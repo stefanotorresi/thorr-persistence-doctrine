@@ -56,7 +56,7 @@ class DoctrineAdapter implements DataMapperInterface, ObjectManagerAwareInterfac
             }
         }
 
-        return $this->objectManager->getRepository($this->entityClass)->findOneBy(['uuid' => $uuid]);
+        return $this->objectManager->getRepository($this->entityClass)->findOneBy(['uuid' => $uuid->toString()]);
     }
 
     /**
