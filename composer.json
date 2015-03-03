@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": "~5.5",
-        "stefanotorresi/thorr-persistence": "0.*@dev",
+        "stefanotorresi/thorr-persistence": "~1.0@beta",
         "doctrine/common": "~2.4"
     },
     "require-dev": {
@@ -28,7 +28,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "0.x-dev"
+            "dev-master": "1.x-dev"
         }
     },
     "autoload" : {
