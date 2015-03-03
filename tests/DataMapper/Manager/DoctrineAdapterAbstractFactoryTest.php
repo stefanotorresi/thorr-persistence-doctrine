@@ -33,7 +33,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
     public function setUp()
     {
         $this->abstractFactory = new DoctrineAdapterAbstractFactory();
-        $this->serviceLocator = $this->getMock(ServiceLocatorInterface::class);
+        $this->serviceLocator  = $this->getMock(ServiceLocatorInterface::class);
     }
 
     /**
@@ -66,7 +66,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
             [
                 [ 'thorr_persistence_dmm' => [] ],
                 'anything',
-                false
+                false,
             ],
             [
                 [
@@ -75,7 +75,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                     ],
                 ],
                 'anything',
-                false
+                false,
             ],
             [
                 [
@@ -86,7 +86,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                     ],
                 ],
                 'anything',
-                false
+                false,
             ],
             [
                 [
@@ -99,7 +99,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                     ],
                 ],
                 'SomeDataMapperServiceName',
-                false
+                false,
             ],
             [
                 [
@@ -112,7 +112,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                     ],
                 ],
                 'SomeDataMapperServiceName',
-                true
+                true,
             ],
             [
                 [
@@ -125,7 +125,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                     ],
                 ],
                 'SomeDataMapperServiceName',
-                false
+                false,
             ],
             [
                 [
@@ -140,7 +140,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                     ],
                 ],
                 'SomeDataMapperServiceName',
-                true
+                true,
             ],
             [
                 [
@@ -153,7 +153,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                     ],
                 ],
                 'SomeDataMapperServiceName',
-                false
+                false,
             ],
             [
                 [
@@ -168,7 +168,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                     ],
                 ],
                 'SomeDataMapperServiceName',
-                false
+                false,
             ],
         ];
     }
@@ -180,7 +180,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
     public function testCreateService($config, $requestedName, $expectedException)
     {
         $objectManagers = [
-            'SomeObjectManagerService' => $this->getMock(ObjectManager::class, [], [], 'SomeObjectManagerService'),
+            'SomeObjectManagerService'    => $this->getMock(ObjectManager::class, [], [], 'SomeObjectManagerService'),
             'AnotherObjectManagerService' => $this->getMock(ObjectManager::class, [], [], 'AnotherObjectManagerService'),
         ];
 
@@ -232,7 +232,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                     'thorr_persistence_dmm' => [
                         'doctrine' => [
                             'object_manager' => 'SomeObjectManagerService',
-                            'adapters' => [
+                            'adapters'       => [
                                 'SomeDataMapperServiceName' => DoctrineAdapter::class,
                             ],
                         ],
@@ -252,7 +252,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                     'thorr_persistence_dmm' => [
                         'doctrine' => [
                             'object_manager' => 'SomeObjectManagerService',
-                            'adapters' => [
+                            'adapters'       => [
                                 'SomeDataMapperServiceName' => \stdClass::class,
                             ],
                         ],
@@ -264,7 +264,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                 // $requestedName
                 'SomeDataMapperServiceName',
                 // $expectedException
-                [ SMException\ServiceNotCreatedException::class, "Invalid data mapper type" ]
+                [ SMException\ServiceNotCreatedException::class, "Invalid data mapper type" ],
             ],
             [
                 // $config
@@ -272,9 +272,9 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                     'thorr_persistence_dmm' => [
                         'doctrine' => [
                             'object_manager' => 'SomeObjectManagerService',
-                            'adapters' => [
+                            'adapters'       => [
                                 'SomeDataMapperServiceName' => [
-                                    'class' => DoctrineAdapter::class,
+                                    'class'          => DoctrineAdapter::class,
                                     'object_manager' => 'AnotherObjectManagerService',
                                 ],
                             ],
@@ -298,7 +298,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
             'thorr_persistence_dmm' => [
                 'doctrine' => [
                     'object_manager' => 'SomeObjectManagerService',
-                    'adapters' => [
+                    'adapters'       => [
                         'SomeDataMapperServiceName' => DoctrineAdapter::class,
                     ],
                 ],

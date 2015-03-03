@@ -49,6 +49,7 @@ class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
 
     /**
      * {@inheritdoc}
+     *
      * @throws Exception\InvalidServiceNameException
      */
     public function createServiceWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName)
@@ -58,7 +59,7 @@ class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
 
         $config = $serviceManager->get('config');
 
-        $dataMapperSpec = $config['thorr_persistence_dmm']['doctrine']['adapters'][$requestedName];
+        $dataMapperSpec      = $config['thorr_persistence_dmm']['doctrine']['adapters'][$requestedName];
         $dataMapperClassName = is_string($dataMapperSpec) ? $dataMapperSpec : $dataMapperSpec['class'];
 
         $entityClass = array_search($requestedName, $config['thorr_persistence_dmm']['entity_data_mapper_map']);
@@ -81,8 +82,9 @@ class DoctrineAdapterAbstractFactory implements AbstractFactoryInterface
     }
 
     /**
-     * @param  ServiceLocatorInterface $serviceLocator
-     * @param  string                  $objectManagerServiceName
+     * @param ServiceLocatorInterface $serviceLocator
+     * @param string                  $objectManagerServiceName
+     *
      * @return ObjectManager
      */
     protected function getObjectManagerService(ServiceLocatorInterface $serviceLocator, $objectManagerServiceName)

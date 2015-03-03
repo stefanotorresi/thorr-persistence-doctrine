@@ -33,7 +33,7 @@ class ORMIntegrationTest extends TestCase
 
         $driver = new MappingDriverChain();
         $driver->addDriver(new XmlDriver('config'), AbstractEntity::class);
-        $driver->addDriver(new XmlDriver(__DIR__.'/Asset'), Asset\Entity::class);
+        $driver->addDriver(new XmlDriver(__DIR__ . '/Asset'), Asset\Entity::class);
 
         $config = Setup::createConfiguration(true);
         $config->setMetadataDriverImpl($driver);
@@ -51,7 +51,7 @@ class ORMIntegrationTest extends TestCase
     public function testUuidIntegration()
     {
         $entity = new Asset\Entity();
-        $uuid = $entity->getUuid();
+        $uuid   = $entity->getUuid();
 
         $this->adapter->save($entity);
 

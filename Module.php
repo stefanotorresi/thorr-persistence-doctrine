@@ -11,7 +11,6 @@
 
 namespace Thorr\Persistence\Doctrine;
 
-use Rhumsaa\Uuid\Doctrine\UuidType;
 use Thorr\Persistence\DataMapper\Manager\DataMapperManagerConfigProviderInterface;
 use Zend\ModuleManager\Feature;
 
@@ -28,11 +27,11 @@ class Module implements
             'thorr_persistence_dmm' => [
                 'doctrine' => [
                     'object_manager' => 'doctrine.objectmanager.orm_default', // an ObjectManager service name
-                    'adapters' => [], // DataMapperServiceName => Spec couples
+                    'adapters'       => [], // DataMapperServiceName => Spec couples
                 ],
             ],
 
-            /**
+            /*
              * Doctrine mappings for Thorr\Persistence\Entity\AbstractEntity
              */
             'doctrine' => [
@@ -47,14 +46,14 @@ class Module implements
                     ],
                     'orm_default' => [
                         'drivers' => [
-                            'Thorr\Persistence\Entity' => 'thorr_persistence_doctrine_orm'
-                        ]
+                            'Thorr\Persistence\Entity' => 'thorr_persistence_doctrine_orm',
+                        ],
                     ],
                     'odm_default' => [
                         'drivers' => [
                             'Thorr\Persistence\Entity' => 'thorr_persistence_doctrine_mongo_odm',
-                        ]
-                    ]
+                        ],
+                    ],
                 ],
             ],
         ];
@@ -64,8 +63,8 @@ class Module implements
     {
         return [
             'abstract_factories' => [
-                DataMapper\Manager\DoctrineAdapterAbstractFactory::class
-            ]
+                DataMapper\Manager\DoctrineAdapterAbstractFactory::class,
+            ],
         ];
     }
 }

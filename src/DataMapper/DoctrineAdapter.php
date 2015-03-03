@@ -11,8 +11,8 @@ use Doctrine\Common\Persistence\ObjectManager;
 use InvalidArgumentException;
 use Rhumsaa\Uuid\Uuid;
 use Thorr\Persistence\DataMapper\DataMapperInterface;
-use Thorr\Persistence\Doctrine\ObjectManager\ObjectManagerAwareTrait;
 use Thorr\Persistence\Doctrine\ObjectManager\ObjectManagerAwareInterface;
+use Thorr\Persistence\Doctrine\ObjectManager\ObjectManagerAwareTrait;
 
 class DoctrineAdapter implements DataMapperInterface, ObjectManagerAwareInterface
 {
@@ -52,7 +52,7 @@ class DoctrineAdapter implements DataMapperInterface, ObjectManagerAwareInterfac
             try {
                 $uuid = Uuid::fromString($uuid);
             } catch (InvalidArgumentException $e) {
-                return null;
+                return;
             }
         }
 

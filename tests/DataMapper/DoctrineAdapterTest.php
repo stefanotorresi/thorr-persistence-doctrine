@@ -8,8 +8,8 @@
 namespace Thorr\Persistence\Doctrine\Test\DataMapper;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use PHPUnit_Framework_TestCase as TestCase;
 use PHPUnit_Framework_MockObject_MockObject as MockObject;
+use PHPUnit_Framework_TestCase as TestCase;
 use Thorr\Persistence\Doctrine\DataMapper\DoctrineAdapter;
 use Thorr\Persistence\Entity\AbstractEntity;
 
@@ -30,7 +30,7 @@ class DoctrineAdapterTest extends TestCase
     public function testFindByUuidWithInvalidUuidReturnsNull()
     {
         $objectManager = $this->getMock(ObjectManager::class);
-        $adapter = new DoctrineAdapter(AbstractEntity::class, $objectManager);
+        $adapter       = new DoctrineAdapter(AbstractEntity::class, $objectManager);
 
         $this->assertNull($adapter->findByUuid('foobar'));
     }
