@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": "~5.5",
-        "stefanotorresi/thorr-persistence": "~1.0@beta",
+        "stefanotorresi/thorr-persistence": "~2.*@dev",
         "doctrine/common": "~2.4"
     },
     "require-dev": {
