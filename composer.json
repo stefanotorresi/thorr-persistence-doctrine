@@ -9,9 +9,11 @@
             "email": "stefano@torresi.pro"
         }
     ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "php": "~5.5",
-        "stefanotorresi/thorr-persistence": "~2.*@dev",
+        "stefanotorresi/thorr-persistence": "2.*",
         "doctrine/common": "~2.4"
     },
     "require-dev": {
