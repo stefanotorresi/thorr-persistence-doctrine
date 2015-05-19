@@ -264,7 +264,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                 // $requestedName
                 'SomeDataMapperServiceName',
                 // $expectedException
-                [ SMException\ServiceNotCreatedException::class, "Invalid data mapper type" ],
+                [ SMException\ServiceNotCreatedException::class, 'Invalid data mapper type' ],
             ],
             [
                 // $config
@@ -324,7 +324,7 @@ class DoctrineAdapterAbstractFactoryTest extends TestCase
                 }
             });
 
-        $this->setExpectedException(SMException\InvalidServiceNameException::class, "Invalid object manager type");
+        $this->setExpectedException(SMException\InvalidServiceNameException::class, 'Invalid object manager type');
 
         $this->abstractFactory->createServiceWithName($this->serviceLocator, 'unrelevant', 'SomeDataMapperServiceName');
     }
