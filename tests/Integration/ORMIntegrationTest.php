@@ -13,7 +13,7 @@ use Doctrine\ORM\Mapping\Driver\XmlDriver;
 use Doctrine\ORM\Tools\SchemaTool;
 use Doctrine\ORM\Tools\Setup;
 use PHPUnit_Framework_TestCase as TestCase;
-use Rhumsaa\Uuid\Uuid;
+use Ramsey\Uuid\Uuid;
 use Thorr\Persistence\Doctrine\DataMapper\DoctrineAdapter;
 use Thorr\Persistence\Entity\AbstractEntity;
 

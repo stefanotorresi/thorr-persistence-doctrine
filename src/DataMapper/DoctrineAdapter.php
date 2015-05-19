@@ -9,7 +9,7 @@ namespace Thorr\Persistence\Doctrine\DataMapper;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use InvalidArgumentException;
-use Rhumsaa\Uuid\Uuid;
+use Ramsey\Uuid\Uuid;
 use Thorr\Persistence\DataMapper\DataMapperInterface;
 use Thorr\Persistence\Doctrine\ObjectManager\ObjectManagerAwareInterface;
 use Thorr\Persistence\Doctrine\ObjectManager\ObjectManagerAwareTrait;
