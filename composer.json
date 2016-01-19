@@ -12,15 +12,16 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": "~5.5",
-        "stefanotorresi/thorr-persistence": "2.*",
-        "doctrine/common": "~2.4"
+        "php": ">=5.5",
+        "stefanotorresi/thorr-persistence": "^2.0",
+        "doctrine/common": "^2.4"
     },
     "require-dev": {
-        "zendframework/zend-modulemanager": "~2.3",
-        "zendframework/zend-servicemanager": "~2.3",
-        "doctrine/orm": "~2.4",
-        "fabpot/php-cs-fixer": "~1.5"
+        "zendframework/zend-modulemanager": "^2.5",
+        "zendframework/zend-servicemanager": "^2.5",
+        "doctrine/orm": "^2.4",
+        "fabpot/php-cs-fixer": "~1.5",
+        "phpunit/phpunit": "^4.6"
     },
     "suggest": {
         "zendframework/zend-modulemanager": "required to load the library as a ZF2 module",
@@ -36,8 +37,22 @@
     },
     "autoload" : {
         "psr-4": {
-            "Thorr\\Persistence\\Doctrine\\": "src/",
+            "Thorr\\Persistence\\Doctrine\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Thorr\\Persistence\\Doctrine\\Test\\": "tests/"
         }
+    },
+    "scripts": {
+        "check": [
+            "@cs-check",
+            "@test"
+        ],
+        "cs-check": "php-cs-fixer --version && php-cs-fixer fix -v --dry-run",
+        "cs-fix": "php-cs-fixer fix -v",
+        "test": "phpunit",
+        "test-coverage": "phpunit --coverage-clover ./build/coverage/clover.xml"
     }
 }
