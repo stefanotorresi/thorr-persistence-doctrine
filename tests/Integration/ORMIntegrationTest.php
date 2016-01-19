@@ -57,16 +57,43 @@ class ORMIntegrationTest extends TestCase
 
         $this->assertSame($uuid, $entity->getUuid());
 
-        $this->assertSame($entity, $this->adapter->findByUuid($uuid),
+        $this->assertSame(
+            $entity,
+            $this->adapter->findByUuid($uuid),
             sprintf('Failed to find an entity with uuid %s', $uuid)
         );
 
-        $this->assertSame($entity, $this->adapter->findByUuid(Uuid::fromString($uuid)),
+        $this->assertSame(
+            $entity,
+            $this->adapter->findByUuid(Uuid::fromString($uuid)),
             'Failed to find an entity with uuid object'
         );
 
         $this->adapter->removeByUuid($uuid);
 
         $this->assertNull($this->adapter->findByUuid($uuid));
+    }
+
+    public function testSaveDeferred()
+    {
+        $entity = new Asset\Entity();
+
+        $this->adapter->saveDeferred($entity);
+        $this->assertNull($this->adapter->findByUuid($entity->getUuid()));
+
+        $this->adapter->commit();
+        $this->assertSame($entity, $this->adapter->findByUuid($entity->getUuid()));
+    }
+
+    public function testRemoveDeferred()
+    {
+        $entity = new Asset\Entity();
+        $this->adapter->save($entity);
+
+        $this->adapter->removeDeferred($entity);
+        $this->assertEquals($entity, $this->adapter->findByUuid($entity->getUuid()));
+
+        $this->adapter->commit();
+        $this->assertNull($this->adapter->findByUuid($entity->getUuid()));
     }
 }

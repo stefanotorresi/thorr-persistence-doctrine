@@ -34,17 +34,4 @@ class DoctrineAdapterTest extends TestCase
 
         $this->assertNull($adapter->findByUuid('foobar'));
     }
-
-    public function testUpdateProxiesToSave()
-    {
-        /** @var DoctrineAdapter|MockObject $adapter */
-        $adapter = $this->getMock(DoctrineAdapter::class, ['save'], [], '', false);
-
-        $arg = 'foo';
-        $adapter->expects($this->atLeastOnce())
-                ->method('save')
-                ->with($arg);
-
-        $adapter->update($arg);
-    }
 }

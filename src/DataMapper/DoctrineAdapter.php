@@ -10,11 +10,23 @@ namespace Thorr\Persistence\Doctrine\DataMapper;
 use Doctrine\Common\Persistence\ObjectManager;
 use InvalidArgumentException;
 use Ramsey\Uuid\Uuid;
-use Thorr\Persistence\DataMapper\DataMapperInterface;
+use Thorr\Persistence\DataMapper\DeferredOperationProvider;
+use Thorr\Persistence\DataMapper\DeferredRemoveProvider;
+use Thorr\Persistence\DataMapper\DeferredSaveProvider;
+use Thorr\Persistence\DataMapper\EntityFinderInterface;
+use Thorr\Persistence\DataMapper\EntityRemoverInterface;
+use Thorr\Persistence\DataMapper\EntitySaverInterface;
 use Thorr\Persistence\Doctrine\ObjectManager\ObjectManagerAwareInterface;
 use Thorr\Persistence\Doctrine\ObjectManager\ObjectManagerAwareTrait;
 
-class DoctrineAdapter implements DataMapperInterface, ObjectManagerAwareInterface
+class DoctrineAdapter implements
+    EntityFinderInterface,
+    EntitySaverInterface,
+    EntityRemoverInterface,
+    DeferredOperationProvider,
+    DeferredSaveProvider,
+    DeferredRemoveProvider,
+    ObjectManagerAwareInterface
 {
     use ObjectManagerAwareTrait;
 
@@ -89,8 +101,24 @@ class DoctrineAdapter implements DataMapperInterface, ObjectManagerAwareInterfac
     /**
      * {@inheritdoc}
      */
-    public function update($entity)
+    public function saveDeferred($entity)
     {
-        $this->save($entity);
+        $this->objectManager->persist($entity);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function removeDeferred($entity)
+    {
+        $this->objectManager->remove($entity);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function commit()
+    {
+        $this->objectManager->flush();
     }
 }
