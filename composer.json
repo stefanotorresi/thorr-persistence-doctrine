@@ -35,9 +35,6 @@
         }
     },
     "autoload" : {
-        "classmap": [
-            "Module.php"
-        ],
         "psr-4": {
             "Thorr\\Persistence\\Doctrine\\": "src/",
             "Thorr\\Persistence\\Doctrine\\Test\\": "tests/"
