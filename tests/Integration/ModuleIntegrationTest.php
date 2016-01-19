@@ -9,7 +9,6 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use PHPUnit_Framework_TestCase as TestCase;
 use Thorr\Persistence\DataMapper\Manager\DataMapperManager;
 use Thorr\Persistence\Doctrine;
-use Thorr\Persistence\Doctrine\DataMapper;
 use Thorr\Persistence\Doctrine\DataMapper\DoctrineAdapter;
 use Zend\Mvc\Application;
 use Zend\ServiceManager\ServiceManager;
@@ -51,9 +50,9 @@ class ModuleIntegrationTest extends TestCase
                 'connection' => [
                     'orm_default' => [
                         'driverClass' => \Doctrine\DBAL\Driver\PDOSqlite\Driver::class,
-                        'params' => [
+                        'params'      => [
                             'memory' => true,
-                        ]
+                        ],
                     ],
                 ],
                 'driver' => [
@@ -67,7 +66,7 @@ class ModuleIntegrationTest extends TestCase
                         ],
                     ],
                 ],
-            ]
+            ],
         ]);
         $app            = Application::init($this->appConfig);
         $serviceManager = $app->getServiceManager();
@@ -87,9 +86,9 @@ class ModuleIntegrationTest extends TestCase
                 'connection' => [
                     'orm_default' => [
                         'driverClass' => \Doctrine\DBAL\Driver\PDOSqlite\Driver::class,
-                        'params' => [
+                        'params'      => [
                             'memory' => true,
-                        ]
+                        ],
                     ],
                 ],
                 'driver' => [
@@ -106,7 +105,7 @@ class ModuleIntegrationTest extends TestCase
             ],
             'thorr_persistence_dmm' => [
                 'entity_data_mapper_map' => [
-                    Asset\Entity::class => 'TestMapper'
+                    Asset\Entity::class => 'TestMapper',
                 ],
                 'doctrine' => [
                     'adapters' => [
@@ -116,8 +115,8 @@ class ModuleIntegrationTest extends TestCase
             ],
         ]);
 
-        $app            = Application::init($this->appConfig);
-        $serviceManager = $app->getServiceManager();
+        $app               = Application::init($this->appConfig);
+        $serviceManager    = $app->getServiceManager();
         $dataMapperManager = $serviceManager->get(DataMapperManager::class);
         $this->assertInstanceOf(
             DoctrineAdapter::class,

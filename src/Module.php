@@ -29,7 +29,7 @@ class Module implements
                 'doctrine' => [
                     'object_manager' => EntityManager::class, // an ObjectManager service name
                     'adapters'       => [
-                        /**
+                        /*
                          * DataMapperServiceName => Spec
                          *
                          * Spec can be:
@@ -48,7 +48,7 @@ class Module implements
                 ],
             ],
 
-            /**
+            /*
              * Doctrine ORM mappings for Thorr\Persistence\Entity\AbstractEntity
              */
             'doctrine' => [
