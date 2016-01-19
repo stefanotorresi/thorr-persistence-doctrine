@@ -8,7 +8,6 @@
 namespace Thorr\Persistence\Doctrine\Test\DataMapper;
 
 use Doctrine\Common\Persistence\ObjectManager;
-use PHPUnit_Framework_MockObject_MockObject as MockObject;
 use PHPUnit_Framework_TestCase as TestCase;
 use Thorr\Persistence\Doctrine\DataMapper\DoctrineAdapter;
 use Thorr\Persistence\Entity\AbstractEntity;

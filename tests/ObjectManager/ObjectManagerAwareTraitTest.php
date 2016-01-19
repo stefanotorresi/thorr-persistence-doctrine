@@ -13,7 +13,7 @@ class ObjectManagerAwareTraitTest extends TestCase
 {
     public function testAccessors()
     {
-        $sut = $this->getMockForTrait(ObjectManagerAwareTrait::class);
+        $sut           = $this->getMockForTrait(ObjectManagerAwareTrait::class);
         $objectManager = $this->getMock(ObjectManager::class);
 
         $sut->setObjectManager($objectManager);
