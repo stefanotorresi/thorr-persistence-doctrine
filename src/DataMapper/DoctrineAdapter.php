@@ -13,16 +13,12 @@ use Ramsey\Uuid\Uuid;
 use Thorr\Persistence\DataMapper\DeferredOperationProvider;
 use Thorr\Persistence\DataMapper\DeferredRemoveProvider;
 use Thorr\Persistence\DataMapper\DeferredSaveProvider;
-use Thorr\Persistence\DataMapper\EntityFinderInterface;
-use Thorr\Persistence\DataMapper\EntityRemoverInterface;
-use Thorr\Persistence\DataMapper\EntitySaverInterface;
+use Thorr\Persistence\DataMapper\SimpleDataMapperInterface;
 use Thorr\Persistence\Doctrine\ObjectManager\ObjectManagerAwareInterface;
 use Thorr\Persistence\Doctrine\ObjectManager\ObjectManagerAwareTrait;
 
 class DoctrineAdapter implements
-    EntityFinderInterface,
-    EntitySaverInterface,
-    EntityRemoverInterface,
+    SimpleDataMapperInterface,
     DeferredOperationProvider,
     DeferredSaveProvider,
     DeferredRemoveProvider,
